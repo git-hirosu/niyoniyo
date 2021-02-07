@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <head>
  <meta charset="utf-8">
+  <!-- Aframe読み込む -->
+  <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  <!-- aframe-extras読み込み -->
+  <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
  <title>ARテスト</title>
  </head>
  <body>
-  <h1><a href="test1024.usdz">CLICK</a></h1>
-  <h1><a href="analogtest1024.usdz">アナログイラスト</a></h1>
-  <h1><a href="test1.usdz">test1</a></h1>
-  <a href="aframe/index.html">A Frame</a>
+  <a-scene embedded arjs>
+   <a-marker preset="hiro">
+    <a-entity gltf-model="url(test2.gltf)" animation-mixer></a-entity>
+   </a-marker>
+   
+   <a-entity camera></a-entity>
+  </a-scene>
  </body>
 </html>
