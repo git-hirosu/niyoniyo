@@ -5,9 +5,12 @@
   <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
   <!-- aframe-extras読み込み -->
   <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
+ <!-- AR.js を読み込む -->
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"></script>
+
  <title>ARテスト</title>
- </head>
- <body>
+</head>
+<body style='margin: 0; overflow: hidden;'>
   <a-scene embedded arjs>
    <a-marker preset="hiro">
     <a-entity gltf-model="url(test2.gltf)" animation-mixer></a-entity>
