@@ -2,7 +2,7 @@
 <head>
  <meta charset="utf-8">
   <!-- Aframe読み込む -->
-  <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <!-- aframe-extras読み込み -->
   <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
  <!-- AR.js を読み込む -->
@@ -12,11 +12,11 @@
 </head>
 <body style='margin: 0; overflow: hidden;'>
   <a-scene embedded arjs="debugUIEnabled:false;">
-   <!-- <a-marker-camera type='pattern' url='./pattern-marker_770.patt'>-->
-   <a-marker preset="hiro">
+   <a-marker-camera type='pattern' url='./pattern-marker_770.patt'>
+   <!--<a-marker preset="hiro">-->
     <a-entity gltf-model="url(test2.gltf)" animation-mixer></a-entity>
-   <!-- </a-marker-camera>-->
-   </a-marker>
+   </a-marker-camera>
+   <!-- </a-marker>-->
    
    <a-entity camera></a-entity>
   </a-scene>
