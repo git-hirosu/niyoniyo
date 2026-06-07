@@ -2,49 +2,53 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Markerless AR Experience</title>
+  <title>Markerless AR</title>
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
   <style>
-    /* ユーザーガイド用のオーバーレイ */
     #overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.85); color: white;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      z-index: 1000; text-align: center; padding: 20px; font-family: sans-serif;
+      z-index: 1000; text-align: center; padding: 20px;
     }
-    button { padding: 15px 30px; font-size: 1.2rem; border-radius: 10px; border: none; background: #007bff; color: white; cursor: pointer; }
+    button { padding: 15px 30px; font-size: 1.2rem; background: #007bff; color: white; border: none; border-radius: 10px; cursor: pointer; }
   </style>
 </head>
 <body>
 
   <div id="overlay">
-    <h2>ARキャラクターを呼び出そう</h2>
-    <p>1. 「AR」ボタンを押してください<br>
-       2. カメラを床に向けてスマホをゆっくり動かしてください<br>
-       3. 画面をタップするとキャラが登場します</p>
-    <p style="font-size: 0.8rem; color: #ccc;">※iPhoneをご利用で動かない場合は「WebXR Viewer」アプリをご利用ください</p>
+    <h2>AR体験の準備</h2>
+    <p>1. ARボタンを押し、カメラを起動<br>2. スマホをゆっくり動かし床を認識させる<br>3. 画面をタップしてキャラを配置</p>
     <button onclick="document.getElementById('overlay').style.display='none'">体験する</button>
   </div>
 
-  <a-scene webxr="requiredFeatures: hit-test, local-floor;" tap-place>
+  <a-scene webxr="requiredFeatures: hit-test, local-floor;" ar-hit-test="target:#model;">
     <a-assets>
       <a-asset-item id="model-item" src="./model.glb"></a-asset-item>
     </a-assets>
 
     <a-camera position="0 1.6 0"></a-camera>
 
-    <a-entity id="model" gltf-model="#model-item" scale="0.5 0.5 0.5" visible="false"></a-entity>
+    <a-entity id="model" 
+              gltf-model="#model-item" 
+              scale="0.5 0.5 0.5" 
+              visible="false">
+    </a-entity>
   </a-scene>
 
   <script>
-    // タップ位置の取得とモデル配置ロジック
-    AFRAME.registerComponent('tap-place', {
+    // 平面認識用のコンポーネント
+    AFRAME.registerComponent('ar-hit-test', {
+      schema: { target: { type: 'selector' } },
       init: function () {
-        this.el.sceneEl.addEventListener('click', (event) => {
-          if (event.detail.intersection) {
-            const model = document.querySelector('#model');
-            model.setAttribute('visible', 'true');
-            model.setAttribute('position', event.detail.intersection.point);
+        this.el.sceneEl.addEventListener('click', (e) => {
+          if (!this.el.components['xr-hit-test']) return;
+          
+          const hit = this.el.components['xr-hit-test'].hitResult;
+          if (hit) {
+            const position = hit.getPosition();
+            this.data.target.setAttribute('position', position);
+            this.data.target.setAttribute('visible', 'true');
           }
         });
       }
